@@ -7,7 +7,9 @@ AUTHOR WEBSITE: https://themefisher.com
 
 // site variables
 {{ with site.Params.variables }}
-$font-primary: '{{.font_primary}}', sans-serif;
+$font-primary: '{{.font_primary}}', '{{.font_secondary}}', sans-serif;
+$font-title: '{{.font_title}}';
+$font-size: {{.font_size}};
 
 $h1: {{.h1}};
 $h1-lg: {{.h1_lg}};

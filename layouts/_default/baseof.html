@@ -5,9 +5,9 @@
 <body>
   {{ partialCached "preloader.html" . }}
   {{ partial "header.html" . }}
-  {{if and (not .IsHome) (ne .Section "blog") (ne .Permalink (`about/` | absURL)) (ne .Permalink (`search/` | absURL)) }}
+  {{ if and (not .IsHome) (not (in site.Params.mainSections .Section)) (ne .Permalink (`about/` | absURL)) (ne .Permalink (`search/` | absURL)) }}
   {{ partial "page-header.html" . }}
-  {{end}}
+  {{ end }}
   {{ block "main" . }}{{ end }}
   {{ partialCached "footer.html" . }}
   {{ partialCached "script.html" . }}

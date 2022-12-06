@@ -5,11 +5,17 @@
     <div class="row no-gutters justify-content-center">
       <div class="col-lg-10">
         <div class="row">
-          {{ $paginator := .Paginate (where site.RegularPages "Type" "in" site.Params.mainSections) }}
-          {{range $index, $items := $paginator.Pages}}
-          <div class="{{ if (eq $index 0) }}col-lg-12{{ else }}col-lg-6{{ end }}">
+          {{ $p := (where site.RegularPages "Type" "in" site.Params.mainSections) }}
+          <!-- Append a dummy page to make the latest post larger in the first page. -->
+          {{ $p = (slice site.Home) | append $p }}
+          {{ $paginator := (.Paginate $p) }}
+          {{ range $index, $item := $paginator.Pages }}
+          <!-- Skip the dummy page. -->
+          {{ if not $item.IsHome }}
+          <div class="{{ if and (not $paginator.HasPrev) (eq $index 1) }}col-lg-12{{ else }}col-lg-6{{ end }}">
             {{.Render "post"}}
           </div>
+          {{end}}
           {{end}}
         </div>
 
